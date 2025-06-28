@@ -4,14 +4,10 @@ Focus on interaction testing and behavior verification.
 """
 from django.test import TestCase, Client
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
-from unittest.mock import Mock, patch
 from datetime import datetime
-import tempfile
-import os
 
-from empresa.models import Empresa, EmpresaManager
+from empresa.models import Empresa
 from empresa.forms import EmpresaForm
 
 

@@ -58,7 +58,7 @@ def validate_image_file(image_file):
             img.verify()
         # Reset file pointer again for Django to use
         image_file.seek(0)
-    except Exception as e:
+    except Exception:
         raise ValidationError(
             'El archivo no es una imagen válida o está corrupto.'
         )

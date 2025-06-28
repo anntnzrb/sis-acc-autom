@@ -6,8 +6,6 @@ from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from decimal import Decimal
-import tempfile
-import os
 
 from productos.models import Producto
 
@@ -298,7 +296,6 @@ class ProductoConstraintsTest(TestCase):
 
 
 # Additional imports for forms and views tests
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.messages import get_messages
 from django.urls import reverse
 

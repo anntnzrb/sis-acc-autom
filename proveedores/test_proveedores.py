@@ -4,7 +4,6 @@ Focus on interaction testing and behavior verification.
 """
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 from proveedores.models import Proveedor
 
