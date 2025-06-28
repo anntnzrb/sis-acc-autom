@@ -17,7 +17,7 @@
                     {% endif %}
                 </p>
             </div>
-            <a href="{% url 'trabajadores:create' %}" class="btn btn-carriacces-primary btn-lg">
+            <a href="{% url 'trabajadores:create' %}" class="btn btn-primary btn-lg">
                 <i class="bi bi-plus-circle me-2"></i>AGREGAR TRABAJADOR
             </a>
         </div>
@@ -27,7 +27,7 @@
             <div class="row g-4">
                 {% for trabajador in trabajadores %}
                     <div class="col-lg-6">
-                        <div class="card-carriacces trabajador-card slide-in-left">
+                        <div class="card trabajador-card slide-in-left shadow-sm">
                             <div class="card-body">
                                 <!-- Imagen del trabajador -->
                                 {% if trabajador.imagen %}
@@ -68,14 +68,14 @@
                                 <!-- Botones de acción -->
                                 <div class="trabajador-actions">
                                     <a href="{% url 'trabajadores:update' trabajador.pk %}" 
-                                       class="btn btn-carriacces-secondary btn-sm-carriacces" 
+                                       class="btn btn-outline-primary btn-sm" 
                                        title="Editar trabajador">
-                                        <i class="bi bi-pencil"></i>
+                                        <i class="bi bi-pencil me-1"></i>Editar
                                     </a>
                                     <a href="{% url 'trabajadores:delete' trabajador.pk %}" 
-                                       class="btn btn-outline-danger btn-sm-carriacces" 
+                                       class="btn btn-outline-danger btn-sm" 
                                        title="Eliminar trabajador">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash me-1"></i>Eliminar
                                     </a>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
             <!-- Pagination -->
             {% if is_paginated %}
                 <nav aria-label="Navegación de trabajadores" class="mt-5">
-                    <ul class="pagination pagination-carriacces justify-content-center">
+                    <ul class="pagination justify-content-center">
                         {% if page_obj.has_previous %}
                             <li class="page-item">
                                 <a class="page-link" href="?page=1">
@@ -139,7 +139,7 @@
                 <p class="empty-state-text">
                     Comienza agregando el primer trabajador de CarriAcces.
                 </p>
-                <a href="{% url 'trabajadores:create' %}" class="btn btn-carriacces-primary btn-lg">
+                <a href="{% url 'trabajadores:create' %}" class="btn btn-primary btn-lg">
                     <i class="bi bi-plus-circle me-2"></i>Agregar Primer Trabajador
                 </a>
             </div>
