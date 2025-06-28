@@ -41,7 +41,7 @@ class Trabajador(models.Model):
         help_text="Código único de empleado",
     )
 
-imagen = models.ImageField(
+    imagen = models.ImageField(
         upload_to="trabajadores/",
         blank=True,
         null=True,
