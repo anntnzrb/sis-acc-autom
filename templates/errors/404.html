@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Página no encontrada - CarriAcces{% endblock %}
+
+{% block page_header %}
+<div class="bg-warning text-dark">
+    <div class="container py-4">
+        <h1 class="mb-0">
+            <i class="bi bi-exclamation-triangle me-2"></i>Error 404
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 text-center">
+        <div class="card shadow border-warning">
+            <div class="card-body py-5">
+                <div class="empty-state">
+                    <i class="bi bi-search" style="font-size: 6rem; color: #ffc107;"></i>
+                    <h2 class="mt-4 mb-3 text-warning">Página no encontrada</h2>
+                    <p class="text-muted mb-4 lead">
+                        Lo sentimos, la página que está buscando no existe o ha sido movida.
+                    </p>
+                    
+                    <div class="d-grid gap-2 d-md-block">
+                        <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-house me-2"></i>Ir al Inicio
+                        </a>
+                        <button onclick="history.back()" class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-arrow-left me-2"></i>Volver Atrás
+                        </button>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <h5 class="text-primary mb-3">Páginas útiles:</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <a href="{% url 'productos:list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-collection d-block mb-1" style="font-size: 1.5rem;"></i>
+                                Productos
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'empresa:detail' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-info-circle d-block mb-1" style="font-size: 1.5rem;"></i>
+                                Nosotros
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'trabajadores:list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-people d-block mb-1" style="font-size: 1.5rem;"></i>
+                                Trabajadores
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'proveedores:list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-building d-block mb-1" style="font-size: 1.5rem;"></i>
+                                Proveedores
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

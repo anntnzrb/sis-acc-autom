@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Error del servidor - CarriAcces{% endblock %}
+
+{% block page_header %}
+<div class="bg-danger text-white">
+    <div class="container py-4">
+        <h1 class="mb-0">
+            <i class="bi bi-exclamation-octagon me-2"></i>Error 500
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 text-center">
+        <div class="card shadow border-danger">
+            <div class="card-body py-5">
+                <div class="empty-state">
+                    <i class="bi bi-gear-wide-connected" style="font-size: 6rem; color: #dc3545;"></i>
+                    <h2 class="mt-4 mb-3 text-danger">Error interno del servidor</h2>
+                    <p class="text-muted mb-4 lead">
+                        Ha ocurrido un error inesperado en el servidor. Nuestro equipo técnico 
+                        ha sido notificado y está trabajando para solucionarlo.
+                    </p>
+                    
+                    <div class="alert alert-info d-flex align-items-center text-start">
+                        <i class="bi bi-info-circle-fill me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <strong>¿Qué puedes hacer?</strong><br>
+                            <small>
+                                • Intenta recargar la página en unos minutos<br>
+                                • Verifica tu conexión a internet<br>
+                                • Contacta a nuestro soporte si el problema persiste
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-block mb-4">
+                        <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-house me-2"></i>Ir al Inicio
+                        </a>
+                        <button onclick="location.reload()" class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Recargar Página
+                        </button>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <h6 class="text-primary mb-3">Mientras tanto, puedes visitar:</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'productos:list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-collection me-2"></i>Catálogo de Productos
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'empresa:detail' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-info-circle me-2"></i>Información de la Empresa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Auto-refresh after 30 seconds -->
+<script>
+    setTimeout(function() {
+        if (confirm('¿Deseas intentar recargar la página automáticamente?')) {
+            location.reload();
+        }
+    }, 30000);
+</script>
+{% endblock %}

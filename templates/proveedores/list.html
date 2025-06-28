@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - CarriAcces{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- Header with Add Button (centrado) -->
+        <div class="text-center mb-4">
+            <h2 class="text-primary mb-2">{{ title }}</h2>
+            <p class="text-muted mb-3">
+                {% if total_proveedores %}
+                    {{ total_proveedores }} proveedor{{ total_proveedores|pluralize:"es" }} registrado{{ total_proveedores|pluralize:"s" }}
+                {% else %}
+                    No hay proveedores registrados
+                {% endif %}
+            </p>
+            <a href="{% url 'proveedores:create' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle me-2"></i>AGREGAR PROVEEDOR
+            </a>
+        </div>
+
+        {% if proveedores %}
+            <!-- Proveedores Grid - 3 columnas con tarjetas verticales -->
+            <div class="row g-4">
+                {% for proveedor in proveedores %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 shadow-sm">
+                            <!-- Header con nombre del proveedor -->
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0 text-center">
+                                    <i class="bi bi-building me-2"></i>{{ proveedor.nombre }}
+                                </h5>
+                            </div>
+                            
+                            <!-- Body con información detallada -->
+                            <div class="card-body d-flex flex-column">
+                                <!-- Descripción -->
+                                <div class="mb-3">
+                                    <small class="text-muted">Descripción:</small><br>
+                                    <p class="text-muted small mb-0">
+                                        {{ proveedor.descripcion|truncatewords:20 }}
+                                    </p>
+                                </div>
+                                
+                                <!-- Información de contacto -->
+                                <div class="mb-3 flex-grow-1">
+                                    <div class="row g-2">
+                                        <!-- Correo -->
+                                        <div class="col-12 mb-2">
+                                            <small class="text-muted">Email:</small><br>
+                                            <span class="fw-medium">
+                                                <i class="bi bi-envelope me-1 text-muted"></i>
+                                                {{ proveedor.correo }}
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- Teléfono -->
+                                        <div class="col-12 mb-2">
+                                            <small class="text-muted">Teléfono:</small><br>
+                                            <span class="fw-medium">
+                                                <i class="bi bi-telephone me-1 text-muted"></i>
+                                                {{ proveedor.telefono }}
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- País -->
+                                        <div class="col-12 mb-2">
+                                            <small class="text-muted">País:</small><br>
+                                            <span class="badge bg-secondary">
+                                                <i class="bi bi-geo-alt me-1"></i>{{ proveedor.pais }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Dirección -->
+                                <div class="mb-3">
+                                    <small class="text-muted">Dirección:</small><br>
+                                    <p class="text-muted small mb-0">
+                                        {{ proveedor.direccion|truncatewords:10 }}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Footer con botones editar/eliminar -->
+                            <div class="card-footer bg-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        {{ proveedor.created_at|date:"d/m/Y" }}
+                                    </small>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'proveedores:update' proveedor.pk %}" 
+                                           class="btn btn-outline-primary btn-sm" 
+                                           title="Editar proveedor">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'proveedores:delete' proveedor.pk %}" 
+                                           class="btn btn-outline-danger btn-sm" 
+                                           title="Eliminar proveedor">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <nav aria-label="Navegación de proveedores" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+        {% else %}
+            <!-- Estado vacío -->
+            <div class="empty-state">
+                <i class="bi bi-building"></i>
+                <h3 class="mt-3 mb-2">No hay proveedores registrados</h3>
+                <p class="text-muted mb-4">
+                    Comienza agregando el primer proveedor para CarriAcces.
+                </p>
+                <a href="{% url 'proveedores:create' %}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-circle me-2"></i>Agregar Primer Proveedor
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

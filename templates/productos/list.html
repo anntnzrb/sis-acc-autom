@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - CarriAcces{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- Header with Add Button -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="text-primary mb-0">{{ title }}</h2>
+                <p class="text-muted mb-0">
+                    {% if total_productos %}
+                        {{ total_productos }} producto{{ total_productos|pluralize:"s" }} en catálogo
+                    {% else %}
+                        No hay productos registrados
+                    {% endif %}
+                </p>
+            </div>
+            <a href="{% url 'productos:create' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle me-2"></i>AGREGAR PRODUCTO
+            </a>
+        </div>
+
+        {% if productos %}
+            <!-- Productos Grid - 3 columnas con tarjetas verticales -->
+            <div class="row g-4">
+                {% for producto in productos %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 shadow-sm">
+                            <!-- Imagen del producto ARRIBA -->
+                            <div class="position-relative">
+                                {% if producto.imagen %}
+                                    <img src="{{ producto.imagen.url }}" 
+                                         class="card-img-top" 
+                                         style="height: 250px; object-fit: cover;"
+                                         alt="{{ producto.nombre }}">
+                                {% else %}
+                                    <div class="card-img-top bg-gradient d-flex align-items-center justify-content-center" 
+                                         style="height: 250px; background: linear-gradient(135deg, #e3f2fd, #bbdefb);">
+                                        <i class="bi bi-box-seam text-primary" style="font-size: 4rem; opacity: 0.7;"></i>
+                                    </div>
+                                {% endif %}
+                                
+                                <!-- Badge de IVA -->
+                                <span class="position-absolute top-0 end-0 badge bg-info m-2">
+                                    {{ producto.get_iva_display_text }}
+                                </span>
+                            </div>
+                            
+                            <!-- Información ABAJO -->
+                            <div class="card-body d-flex flex-column">
+                                <!-- Nombre del producto (centrado) -->
+                                <h5 class="card-title text-center text-primary mb-3">
+                                    {{ producto.nombre }}
+                                </h5>
+                                
+                                <!-- Descripción -->
+                                <p class="card-text text-muted small flex-grow-1">
+                                    {{ producto.descripcion|truncatewords:15 }}
+                                </p>
+                                
+                                <!-- Precios -->
+                                <div class="text-center mb-3">
+                                    <div class="h4 text-primary mb-1">
+                                        {{ producto.get_precio_con_iva_display }}
+                                    </div>
+                                    <small class="text-muted">
+                                        Base: {{ producto.get_precio_display }} + {{ producto.iva }}% IVA
+                                    </small>
+                                </div>
+                                
+                                <!-- Botones editar/eliminar en parte inferior -->
+                                <div class="d-flex justify-content-center gap-2 mt-auto">
+                                    <a href="{% url 'productos:update' producto.pk %}" 
+                                       class="btn btn-outline-primary btn-sm flex-fill" 
+                                       title="Editar producto">
+                                        <i class="bi bi-pencil me-1"></i>Editar
+                                    </a>
+                                    <a href="{% url 'productos:delete' producto.pk %}" 
+                                       class="btn btn-outline-danger btn-sm flex-fill" 
+                                       title="Eliminar producto">
+                                        <i class="bi bi-trash me-1"></i>Eliminar
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Footer con fecha -->
+                            <div class="card-footer bg-light text-center">
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar3 me-1"></i>
+                                    Agregado: {{ producto.created_at|date:"d/m/Y" }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <nav aria-label="Navegación de productos" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+        {% else %}
+            <!-- Estado vacío -->
+            <div class="empty-state">
+                <i class="bi bi-box-seam"></i>
+                <h3 class="mt-3 mb-2">No hay productos registrados</h3>
+                <p class="text-muted mb-4">
+                    Comienza agregando el primer producto al catálogo de CarriAcces.
+                </p>
+                <a href="{% url 'productos:create' %}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-circle me-2"></i>Agregar Primer Producto
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

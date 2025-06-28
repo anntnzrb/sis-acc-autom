@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - CarriAcces{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-box-seam me-2"></i>{{ title }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <!-- Información del Producto -->
+                        <div class="col-md-6">
+                            <h5 class="text-primary mb-3">
+                                <i class="bi bi-info-circle me-2"></i>Información del Producto
+                            </h5>
+                            
+                            <!-- Nombre -->
+                            <div class="mb-3">
+                                <label for="{{ form.nombre.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.nombre.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.nombre }}
+                                {% if form.nombre.help_text %}
+                                    <div class="form-text">{{ form.nombre.help_text }}</div>
+                                {% endif %}
+                                {% if form.nombre.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.nombre.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="mb-3">
+                                <label for="{{ form.descripcion.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.descripcion.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.descripcion }}
+                                {% if form.descripcion.help_text %}
+                                    <div class="form-text">{{ form.descripcion.help_text }}</div>
+                                {% endif %}
+                                {% if form.descripcion.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.descripcion.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Imagen -->
+                            <div class="mb-3">
+                                <label for="{{ form.imagen.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.imagen.label }}
+                                </label>
+                                {{ form.imagen }}
+                                {% if form.imagen.help_text %}
+                                    <div class="form-text">{{ form.imagen.help_text }}</div>
+                                {% endif %}
+                                {% if form.imagen.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.imagen.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                
+                                <!-- Vista previa de imagen actual -->
+                                {% if producto.imagen %}
+                                    <div class="mt-2">
+                                        <small class="text-muted">Imagen actual:</small><br>
+                                        <img src="{{ producto.imagen.url }}" 
+                                             class="img-thumbnail mt-1" 
+                                             style="max-width: 200px; max-height: 150px;"
+                                             alt="Imagen actual">
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Precio e IVA -->
+                        <div class="col-md-6">
+                            <h5 class="text-primary mb-3">
+                                <i class="bi bi-currency-dollar me-2"></i>Precio e Impuestos
+                            </h5>
+                            
+                            <!-- Precio -->
+                            <div class="mb-3">
+                                <label for="{{ form.precio.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.precio.label }} <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    {{ form.precio }}
+                                </div>
+                                {% if form.precio.help_text %}
+                                    <div class="form-text">{{ form.precio.help_text }}</div>
+                                {% endif %}
+                                {% if form.precio.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.precio.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- IVA -->
+                            <div class="mb-3">
+                                <label for="{{ form.iva.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.iva.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.iva }}
+                                {% if form.iva.help_text %}
+                                    <div class="form-text">{{ form.iva.help_text }}</div>
+                                {% endif %}
+                                {% if form.iva.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.iva.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Calculadora de precio -->
+                            <div class="card bg-light mt-4">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="bi bi-calculator me-2"></i>Calculadora de Precio
+                                    </h6>
+                                    <div id="price-calculator">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <small class="text-muted">Precio base:</small><br>
+                                                <span id="base-price" class="fw-bold">$0.00</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted">IVA:</small><br>
+                                                <span id="iva-amount" class="fw-bold">$0.00</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="text-center">
+                                            <small class="text-muted">Precio final:</small><br>
+                                            <span id="final-price" class="h5 text-primary">$0.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Errores del formulario -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Botones de acción -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'productos:list' %}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left me-2"></i>Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle me-2"></i>{{ action }} Producto
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Image preview functionality
+        const imageInput = document.getElementById('{{ form.imagen.id_for_label }}');
+        if (imageInput) {
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Remove existing preview
+                        const existingPreview = document.getElementById('image-preview');
+                        if (existingPreview) {
+                            existingPreview.remove();
+                        }
+                        
+                        // Create new preview
+                        const preview = document.createElement('div');
+                        preview.id = 'image-preview';
+                        preview.className = 'mt-2';
+                        preview.innerHTML = `
+                            <small class="text-muted">Vista previa:</small><br>
+                            <img src="${e.target.result}" 
+                                 class="img-thumbnail mt-1" 
+                                 style="max-width: 200px; max-height: 150px;"
+                                 alt="Vista previa">
+                        `;
+                        imageInput.parentNode.appendChild(preview);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Price calculator functionality
+        const priceInput = document.getElementById('{{ form.precio.id_for_label }}');
+        const ivaSelect = document.getElementById('{{ form.iva.id_for_label }}');
+        const basePriceSpan = document.getElementById('base-price');
+        const ivaAmountSpan = document.getElementById('iva-amount');
+        const finalPriceSpan = document.getElementById('final-price');
+
+        function updatePriceCalculator() {
+            const basePrice = parseFloat(priceInput.value) || 0;
+            const ivaPercentage = parseInt(ivaSelect.value) || 0;
+            
+            const ivaAmount = basePrice * (ivaPercentage / 100);
+            const finalPrice = basePrice + ivaAmount;
+            
+            basePriceSpan.textContent = `$${basePrice.toFixed(2)}`;
+            ivaAmountSpan.textContent = `$${ivaAmount.toFixed(2)}`;
+            finalPriceSpan.textContent = `$${finalPrice.toFixed(2)}`;
+        }
+
+        // Update calculator on input changes
+        if (priceInput && ivaSelect) {
+            priceInput.addEventListener('input', updatePriceCalculator);
+            ivaSelect.addEventListener('change', updatePriceCalculator);
+            
+            // Initial calculation
+            updatePriceCalculator();
+        }
+    });
+</script>
+{% endblock %}
