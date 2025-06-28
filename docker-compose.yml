@@ -12,6 +12,8 @@ services:
 
   web:
     build: .
+    environment:
+      DOCKER_ENVIRONMENT: true
     volumes:
       - .:/app
       - ./media:/app/media
