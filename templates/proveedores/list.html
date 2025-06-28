@@ -7,15 +7,8 @@
     <div class="col-12">
         <!-- Header with Add Button -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="text-primary mb-0">{{ title }}</h2>
-                <p class="text-muted mb-0">
-                    {% if total_proveedores %}
-                        {{ total_proveedores }} proveedor{{ total_proveedores|pluralize:"es" }} registrado{{ total_proveedores|pluralize:"s" }}
-                    {% else %}
-                        No hay proveedores registrados
-                    {% endif %}
-                </p>
+            <div class="flex-grow-1 text-center">
+                <h2 class="text-primary mb-0">NUESTROS PROVEEDORES</h2>
             </div>
             <a href="{% url 'proveedores:create' %}" class="btn btn-primary btn-lg">
                 <i class="bi bi-plus-circle me-2"></i>AGREGAR PROVEEDOR
@@ -162,7 +155,6 @@
                 <div class="empty-state-icon">
                     <i class="bi bi-building"></i>
                 </div>
-                <h3 class="empty-state-title">No hay proveedores registrados</h3>
                 <p class="empty-state-text">
                     La red de proveedores está vacía. Utiliza el botón "AGREGAR PROVEEDOR" en la parte superior para comenzar a construir tu red de socios comerciales.
                 </p>
