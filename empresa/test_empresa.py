@@ -1,16 +1,18 @@
 """
-Test cases for Empresa model using London School TDD approach.
+Test cases for Empresa app using London School TDD approach.
 Focus on interaction testing and behavior verification.
 """
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.urls import reverse
 from unittest.mock import Mock, patch
 from datetime import datetime
 import tempfile
 import os
 
 from empresa.models import Empresa, EmpresaManager
+from empresa.forms import EmpresaForm
 
 
 class EmpresaModelTest(TestCase):
@@ -234,8 +236,8 @@ class EmpresaManagerTest(TestCase):
         self.assertIn("Ya existe una empresa registrada", str(context.exception))
 
 
-class EmpresaConstraintsTest(TestCase):
-    """Test database constraints and indexes."""
+class EmpresaFormTest(TestCase):
+    """Test EmpresaForm validation and behavior."""
     
     def setUp(self):
         """Set up test data."""
@@ -248,27 +250,142 @@ class EmpresaConstraintsTest(TestCase):
             'ruc': '1234567890001'
         }
     
-    def test_unique_constraint_name(self):
-        """Test that unique constraint exists for RUC."""
-        constraints = Empresa._meta.constraints
-        unique_constraint = next(
-            (c for c in constraints if hasattr(c, 'fields') and 'ruc' in c.fields),
-            None
-        )
-        
-        self.assertIsNotNone(unique_constraint)
-        self.assertEqual(unique_constraint.name, 'unique_empresa_ruc')
+    def test_form_valid_with_complete_data(self):
+        """Test form is valid with complete data."""
+        form = EmpresaForm(data=self.valid_data)
+        self.assertTrue(form.is_valid())
     
-    def test_field_validators(self):
-        """Test that fields have proper validators."""
-        # Test RUC field validators
-        ruc_field = Empresa._meta.get_field('ruc')
-        self.assertTrue(ruc_field.unique)
-        self.assertEqual(ruc_field.max_length, 13)
+    def test_form_saves_with_data_normalization(self):
+        """Test form saves empresa with normalized data."""
+        data = self.valid_data.copy()
+        data['nombre'] = 'carriacces s.a.'
+        form = EmpresaForm(data=data)
         
-        # Test anio_fundacion validators
-        anio_field = Empresa._meta.get_field('anio_fundacion')
-        self.assertTrue(any(
-            hasattr(validator, 'limit_value') and validator.limit_value == 1900
-            for validator in anio_field.validators
-        ))
+        self.assertTrue(form.is_valid())
+        empresa = form.save()
+        
+        self.assertEqual(empresa.nombre, 'Carriacces S.A.')
+    
+    def test_form_invalid_with_invalid_ruc(self):
+        """Test form is invalid with invalid RUC."""
+        data = self.valid_data.copy()
+        data['ruc'] = 'invalid'
+        form = EmpresaForm(data=data)
+        
+        self.assertFalse(form.is_valid())
+        self.assertIn('ruc', form.errors)
+    
+    def test_form_invalid_with_invalid_year(self):
+        """Test form is invalid with invalid foundation year."""
+        data = self.valid_data.copy()
+        data['anio_fundacion'] = 1800
+        form = EmpresaForm(data=data)
+        
+        self.assertFalse(form.is_valid())
+        self.assertIn('anio_fundacion', form.errors)
+    
+    def test_form_singleton_validation(self):
+        """Test form validates singleton constraint."""
+        # Create existing empresa
+        Empresa.objects.create(**self.valid_data)
+        
+        # Try to create another through form
+        data = self.valid_data.copy()
+        data['ruc'] = '9876543210001'
+        form = EmpresaForm(data=data)
+        
+        self.assertFalse(form.is_valid())
+        self.assertIn('__all__', form.errors)
+
+
+class EmpresaViewTest(TestCase):
+    """Test Empresa views and templates."""
+    
+    def setUp(self):
+        """Set up test client and data."""
+        self.client = Client()
+        self.valid_data = {
+            'nombre': 'CarriAcces S.A.',
+            'direccion': 'Av. Principal 123, Quito, Ecuador',
+            'mision': 'Proveer los mejores accesorios automotrices',
+            'vision': 'Ser líderes en el mercado automotriz',
+            'anio_fundacion': 2010,
+            'ruc': '1234567890001'
+        }
+    
+    def test_empresa_detail_view_with_empresa(self):
+        """Test detail view when empresa exists."""
+        empresa = Empresa.objects.create(**self.valid_data)
+        response = self.client.get(reverse('empresa:detail'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, empresa.nombre)
+        self.assertContains(response, empresa.ruc)
+    
+    def test_empresa_detail_view_without_empresa(self):
+        """Test detail view when no empresa exists."""
+        response = self.client.get(reverse('empresa:detail'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'NO SE HA INGRESADO INFORMACIÓN')
+    
+    def test_empresa_create_view_get(self):
+        """Test create view GET request."""
+        response = self.client.get(reverse('empresa:create'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'form')
+        self.assertIsInstance(response.context['form'], EmpresaForm)
+    
+    def test_empresa_create_view_post_valid(self):
+        """Test create view POST with valid data."""
+        response = self.client.post(reverse('empresa:create'), data=self.valid_data)
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Empresa.objects.exists())
+        empresa = Empresa.objects.first()
+        self.assertEqual(empresa.nombre, 'Carriacces S.A.')
+    
+    def test_empresa_create_view_post_invalid(self):
+        """Test create view POST with invalid data."""
+        data = self.valid_data.copy()
+        data['ruc'] = 'invalid'
+        response = self.client.post(reverse('empresa:create'), data=data)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(Empresa.objects.exists())
+        self.assertContains(response, 'form')
+    
+    def test_empresa_edit_view_get(self):
+        """Test edit view GET request."""
+        empresa = Empresa.objects.create(**self.valid_data)
+        response = self.client.get(reverse('empresa:update'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, empresa.nombre)
+        self.assertIsInstance(response.context['form'], EmpresaForm)
+    
+    def test_empresa_edit_view_post_valid(self):
+        """Test edit view POST with valid data."""
+        empresa = Empresa.objects.create(**self.valid_data)
+        data = self.valid_data.copy()
+        data['nombre'] = 'Nuevo Nombre'
+        
+        response = self.client.post(reverse('empresa:update'), data=data)
+        
+        self.assertEqual(response.status_code, 302)
+        empresa.refresh_from_db()
+        self.assertEqual(empresa.nombre, 'Nuevo Nombre')
+    
+    def test_empresa_edit_view_post_invalid(self):
+        """Test edit view POST with invalid data."""
+        empresa = Empresa.objects.create(**self.valid_data)
+        data = self.valid_data.copy()
+        data['ruc'] = 'invalid'
+        
+        response = self.client.post(reverse('empresa:update'), data=data)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'form')
+        empresa.refresh_from_db()
+        self.assertEqual(empresa.ruc, '1234567890001')  # Should not change
