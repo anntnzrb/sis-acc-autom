@@ -159,26 +159,7 @@ docker-compose up --build -d
 docker-compose exec web python manage.py migrate
 
 # Comandos a través de Docker
-docker-compose exec web uvx ruff check
-docker-compose exec web uvx ruff format
-docker-compose exec web uv run python manage.py test
-```
-
-### 5.2 Comandos UV Requeridos
-```bash
-# Gestión de dependencias
-uv add django==5.2.2
-uv add psycopg2-binary
-uv add Pillow
-
-# Comandos Django
-uv run python manage.py makemigrations
-uv run python manage.py migrate
-uv run python manage.py runserver
-
-# Herramientas de desarrollo
-uvx ruff check     # Linting obligatorio
-uvx ruff format    # Formateo obligatorio
+docker-compose exec web python manage.py test
 ```
 
 ## 6. Configuración Específica
@@ -262,15 +243,9 @@ SUCURSALES → #
 
 ### 8.1 Herramientas Obligatorias
 ```bash
-# Linting - Sin errores permitidos
-uvx ruff check
-
-# Formateo - Aplicación obligatoria
-uvx ruff format
-
 # Testing - Cobertura mínima 85%
-uv run coverage run --source='.' manage.py test
-uv run coverage report
+coverage run --source='.' manage.py test
+coverage report
 ```
 
 ### 8.2 Validaciones Requeridas

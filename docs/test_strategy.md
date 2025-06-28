@@ -508,49 +508,22 @@ exclude_lines =
 ### 5.2 Comandos de Testing
 ```bash
 # Test completo con cobertura
-uv run coverage run --source='.' manage.py test
-uv run coverage report --show-missing
-uv run coverage html
+coverage run --source='.' manage.py test
+coverage report --show-missing
+coverage html
 
 # Test específico por app
-uv run python manage.py test trabajadores
-uv run python manage.py test empresa.tests.test_models
+python manage.py test trabajadores
+python manage.py test empresa.tests.test_models
 
 # Test con verbose output
-uv run python manage.py test --verbosity=2
+python manage.py test --verbosity=2
 
 # Test con failfast (parar en primer fallo)
-uv run python manage.py test --failfast
+python manage.py test --failfast
 
 # Test de performance
-uv run python manage.py test --debug-mode
-```
-
-### 5.3 CI/CD Integration
-```yaml
-# .github/workflows/tests.yml
-name: Tests
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.13'
-      - name: Install UV
-        run: pip install uv
-      - name: Install dependencies
-        run: uv sync
-      - name: Run tests with coverage
-        run: |
-          uv run coverage run --source='.' manage.py test
-          uv run coverage report --fail-under=85
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+python manage.py test --debug-mode
 ```
 
 ## 6. Testing Best Practices

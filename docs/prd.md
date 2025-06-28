@@ -15,7 +15,7 @@ Desarrollar una aplicación web completa para una **{{ tipo_tienda }}** bajo el 
 ## Stack Tecnológico
 - **Python**: 3.13
 - **Framework**: Django 5.2.2
-- **Gestor de Paquetes**: UV (para manejo de dependencias y entornos virtuales) (se debe usar `uv` como interfaz para python, no el comand `python` directamente)
+- **Gestor de Paquetes**: UV (para manejo de dependencias y entornos virtuales)
 - **Base de Datos**: PostgreSQL
 - **Frontend**: HTML, CSS/Bootstrap, JavaScript (opcional)
 - **Adaptador de Base de Datos**: psycopg2
@@ -220,20 +220,12 @@ Navegación estándar en todas las páginas (según diseños oficiales):
 - Validación apropiada y manejo de errores
 - Manejo de carga de archivos para imágenes
 
-## Configuración de Dependencias
-Usando el gestor de paquetes UV:
-```bash
-uv add django==5.2.2
-uv add psycopg2-binary  # Librería específica requerida para PostgreSQL
-uv add Pillow  # para soporte de ImageField
-```
-
 **Tecnologías mínimas requeridas**: HTML, CSS o Bootstrap, JavaScript (Opcional), Django, Python, PostgreSQL.
 
 ## Configuración de Migración y Base de Datos
 1. Crear base de datos PostgreSQL `practicatpe2`
 2. Crear usuario de base de datos con credenciales especificadas
-3. Ejecutar migraciones de Django para crear tablas: `uv run python manage.py makemigrations` y `uv run python manage.py migrate`
+3. Ejecutar migraciones de Django para crear tablas: `python manage.py makemigrations` y `python manage.py migrate`
 4. Asegurar conectividad apropiada de base de datos
 5. **Requisito previo**: Tener instalado el motor de base de datos PostgreSQL
 

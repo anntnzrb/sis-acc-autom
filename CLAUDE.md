@@ -13,8 +13,8 @@
   docker-compose exec <container> <cmd>
   ```
 
-  - **Linter**: `uvx ruff check`
-  - **Formatter**: `uvx ruff format`
+  - **Linter**: `uvx ruff check` (locally - no Docker)
+  - **Formatter**: `uvx ruff format` (locally - no Docker)
 
 ## Restricciones de Implementación
 - **NO** implementar componentes adicionales como nginx, servidores web externos, o tecnologías no especificadas

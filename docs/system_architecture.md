@@ -487,9 +487,9 @@ class TrabajadorModelTestCase(TestCase):
 ### 4.3 Coverage Target: 85%
 ```bash
 # Comando para verificar cobertura
-uv run coverage run --source='.' manage.py test
-uv run coverage report --show-missing
-uv run coverage html
+coverage run --source='.' manage.py test
+coverage report --show-missing
+coverage html
 
 # Target de cobertura por componente:
 # - Models: 90%+

@@ -577,56 +577,6 @@ class Command(BaseCommand):
             self.stdout.write('\n🎉 Todas las verificaciones pasaron')
 ```
 
-### 7.3 Deployment Scripts
-```bash
-#!/bin/bash
-# scripts/deploy.sh
-set -e
-
-echo "=== Iniciando deployment de CarriAcces ==="
-
-# Verificar entorno
-if [ "$ENVIRONMENT" != "production" ]; then
-    echo "❌ Este script solo funciona en producción"
-    exit 1
-fi
-
-# Instalar dependencias
-echo "📦 Instalando dependencias..."
-uv sync --frozen
-
-# Recolectar archivos estáticos
-echo "📁 Recolectando archivos estáticos..."
-uv run python manage.py collectstatic --noinput
-
-# Ejecutar migraciones
-echo "🔄 Ejecutando migraciones..."
-uv run python manage.py migrate --noinput
-
-# Verificar configuración
-echo "🔍 Verificando configuración..."
-uv run python manage.py production_checklist
-
-# Verificar tests
-echo "🧪 Ejecutando tests..."
-uv run python manage.py test --verbosity=1
-
-# Crear superusuario si no existe
-echo "👤 Configurando superusuario..."
-uv run python manage.py shell -c "
-from django.contrib.auth import get_user_model
-User = get_user_model()
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@carriacces.com', 'admin_password_change_this')
-    print('Superusuario creado')
-else:
-    print('Superusuario ya existe')
-"
-
-echo "✅ Deployment completado exitosamente"
-echo "🚀 La aplicación está lista en http://localhost:8000"
-```
-
 ## 8. Monitoring y Observabilidad
 
 ### 8.1 Application Metrics
