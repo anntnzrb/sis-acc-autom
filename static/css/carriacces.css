@@ -156,7 +156,6 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
     font-size: var(--font-size-4xl);
     font-weight: var(--font-weight-extrabold);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -251,22 +250,14 @@ h3 {
 }
 
 .company-title a {
-    background: linear-gradient(135deg, var(--chrome-highlight) 0%, var(--text-light) 50%, var(--metallic-silver) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: var(--text-light);
     transition: all var(--transition-normal);
     text-decoration: none;
 }
 
 .company-title a:hover {
-    background: linear-gradient(135deg, var(--racing-yellow) 0%, var(--text-light) 50%, var(--racing-orange) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--racing-yellow);
     transform: scale(1.02);
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
 }
 
 .company-title .bi-car-front-fill {
