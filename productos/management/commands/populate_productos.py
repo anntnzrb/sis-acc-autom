@@ -50,15 +50,15 @@ class Command(BaseCommand):
                 'descripcion': 'Sistema de audio premium con tecnología Bluetooth 5.0, sonido surround y ecualizador digital. Incluye amplificador de 4 canales y subwoofer integrado. Fácil instalación con kit completo incluido.',
                 'precio': Decimal('320.75'),
                 'iva': 15,
-                'imagen_url': 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&q=80',
-                'imagen_name': 'sistema_audio.jpg'
+                'imagen_local': 'sistema_audio.png',
+                'imagen_name': 'sistema_audio.png'
             },
             {
                 'nombre': 'Kit Iluminación LED Interior',
                 'descripcion': 'Kit completo de iluminación LED para interior del vehículo. Incluye tiras LED RGB multicolor con control remoto, instalación plug-and-play. Crea ambiente personalizado con 16 millones de colores disponibles.',
                 'precio': Decimal('89.99'),
-                'iva': 15,
-                'imagen_url': 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=500&q=80',
+                'iva': 0,
+                'imagen_url': 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&q=80',
                 'imagen_name': 'led_interior.jpg'
             }
         ]
@@ -70,20 +70,32 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Creating mock products...'))
 
         for producto_data in productos_data:
-            # Download image
+            # Handle image (download or copy local)
             imagen_path = None
             try:
-                imagen_url = producto_data.pop('imagen_url')
                 imagen_name = producto_data.pop('imagen_name')
                 imagen_local_path = os.path.join(media_productos_dir, imagen_name)
                 
-                self.stdout.write(f'Downloading image: {imagen_name}...')
-                urllib.request.urlretrieve(imagen_url, imagen_local_path)
-                imagen_path = f'productos/{imagen_name}'
+                if 'imagen_local' in producto_data:
+                    # Copy from project root
+                    imagen_local = producto_data.pop('imagen_local')
+                    source_path = os.path.join(settings.BASE_DIR, imagen_local)
+                    self.stdout.write(f'Copying local image: {imagen_name}...')
+                    
+                    import shutil
+                    shutil.copy2(source_path, imagen_local_path)
+                    imagen_path = f'productos/{imagen_name}'
+                    
+                elif 'imagen_url' in producto_data:
+                    # Download from URL
+                    imagen_url = producto_data.pop('imagen_url')
+                    self.stdout.write(f'Downloading image: {imagen_name}...')
+                    urllib.request.urlretrieve(imagen_url, imagen_local_path)
+                    imagen_path = f'productos/{imagen_name}'
                 
             except Exception as e:
                 self.stdout.write(
-                    self.style.WARNING(f'Could not download image: {e}')
+                    self.style.WARNING(f'Could not process image: {e}')
                 )
 
             # Create product
