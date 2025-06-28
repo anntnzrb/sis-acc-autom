@@ -107,17 +107,17 @@ class TrabajadorFormTest(TestCase):
             content_type='image/jpeg'
         )
         
+        # Mock the validation to return the image (successful validation)
+        mock_validate.return_value = mock_image
+        
         data = self.valid_data.copy()
         files = {'imagen': mock_image}
         
         form = TrabajadorForm(data=data, files=files)
         
-        # This would be called in clean_imagen method
+        # This should call validation in clean_imagen method
         if form.is_valid():
-            pass  # Validation would happen here
-        
-        # In actual implementation, mock_validate should be called
-        # mock_validate.assert_called_once_with(mock_image)
+            mock_validate.assert_called_once_with(mock_image)
     
     def test_form_unique_constraints_validation(self):
         """Test form validation for unique constraints."""
@@ -201,13 +201,11 @@ class TrabajadorFormTest(TestCase):
         form = TrabajadorForm(data=data)
         
         if form.is_valid():
-            trabajador = form.save(commit=False)
-            
-            # Test normalization (this would happen in model's clean method)
-            self.assertEqual(trabajador.nombre.strip(), 'juan carlos')
-            self.assertEqual(trabajador.apellido.strip(), 'pérez garcía')
-            self.assertEqual(trabajador.correo.strip(), 'JUAN.PEREZ@CARRIACCES.COM')
-            self.assertEqual(trabajador.codigo_empleado.strip(), 'emp001')
+            # Test that form's clean methods normalize the data
+            self.assertEqual(form.cleaned_data['nombre'], 'Juan Carlos')  # Title case
+            self.assertEqual(form.cleaned_data['apellido'], 'Pérez García')  # Title case
+            self.assertEqual(form.cleaned_data['correo'], 'juan.perez@carriacces.com')  # Lowercase
+            self.assertEqual(form.cleaned_data['codigo_empleado'], 'EMP001')  # Uppercase
 
 
 class TrabajadorFormIntegrationTest(TestCase):

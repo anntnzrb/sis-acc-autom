@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Trabajador
+from carriacces.utils import validate_uploaded_image
 
 
 class TrabajadorForm(forms.ModelForm):
@@ -138,13 +139,6 @@ class TrabajadorForm(forms.ModelForm):
         """Validación personalizada para la imagen."""
         imagen = self.cleaned_data.get('imagen')
         if imagen:
-            # Verificar tipo de archivo
-            allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
-            if imagen.content_type not in allowed_types:
-                raise ValidationError("Solo se permiten imágenes en formato JPG, PNG o WebP.")
-            
-            # Verificar tamaño
-            if imagen.size > 5 * 1024 * 1024:  # 5MB
-                raise ValidationError("La imagen no puede ser mayor a 5MB.")
-        
+            # Use the centralized validation utility
+            imagen = validate_uploaded_image(imagen)
         return imagen
