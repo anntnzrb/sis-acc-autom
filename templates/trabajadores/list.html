@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - CarriAcces{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- Header with Add Button -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="text-primary mb-0">{{ title }}</h2>
+                <p class="text-muted mb-0">
+                    {% if total_trabajadores %}
+                        {{ total_trabajadores }} trabajador{{ total_trabajadores|pluralize:"es" }} registrado{{ total_trabajadores|pluralize:"s" }}
+                    {% else %}
+                        No hay trabajadores registrados
+                    {% endif %}
+                </p>
+            </div>
+            <a href="{% url 'trabajadores:create' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle me-2"></i>AGREGAR TRABAJADOR
+            </a>
+        </div>
+
+        {% if trabajadores %}
+            <!-- Trabajadores Grid - 2 columnas con tarjetas horizontales -->
+            <div class="row g-4">
+                {% for trabajador in trabajadores %}
+                    <div class="col-lg-6">
+                        <div class="card h-100 shadow-sm">
+                            <div class="row g-0 h-100">
+                                <!-- Imagen del trabajador a la IZQUIERDA -->
+                                <div class="col-md-4">
+                                    {% if trabajador.imagen %}
+                                        <img src="{{ trabajador.imagen.url }}" 
+                                             class="img-fluid rounded-start h-100 object-fit-cover" 
+                                             alt="Foto de {{ trabajador.get_nombre_completo }}"
+                                             style="min-height: 200px;">
+                                    {% else %}
+                                        <div class="bg-light d-flex align-items-center justify-content-center rounded-start h-100" 
+                                             style="min-height: 200px;">
+                                            <i class="bi bi-person-circle text-muted" style="font-size: 4rem;"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Información a la DERECHA -->
+                                <div class="col-md-8">
+                                    <div class="card-body d-flex flex-column h-100">
+                                        <!-- Botones editar/eliminar en esquina superior derecha -->
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h5 class="card-title text-primary mb-0">
+                                                {{ trabajador.get_nombre_completo }}
+                                            </h5>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="{% url 'trabajadores:update' trabajador.pk %}" 
+                                                   class="btn btn-outline-primary btn-sm" 
+                                                   title="Editar trabajador">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a href="{% url 'trabajadores:delete' trabajador.pk %}" 
+                                                   class="btn btn-outline-danger btn-sm" 
+                                                   title="Eliminar trabajador">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Información del trabajador -->
+                                        <div class="flex-grow-1">
+                                            <div class="mb-2">
+                                                <small class="text-muted">Email:</small><br>
+                                                <span class="fw-medium">
+                                                    <i class="bi bi-envelope me-1 text-muted"></i>
+                                                    {{ trabajador.correo }}
+                                                </span>
+                                            </div>
+                                            
+                                            <div class="mb-2">
+                                                <small class="text-muted">Cédula:</small><br>
+                                                <span class="fw-medium">
+                                                    <i class="bi bi-card-text me-1 text-muted"></i>
+                                                    {{ trabajador.cedula }}
+                                                </span>
+                                            </div>
+                                            
+                                            <div class="mb-0">
+                                                <small class="text-muted">Código de Empleado:</small><br>
+                                                <span class="badge bg-secondary">
+                                                    {{ trabajador.codigo_empleado }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Fecha de registro -->
+                                        <div class="mt-2 pt-2 border-top">
+                                            <small class="text-muted">
+                                                <i class="bi bi-calendar3 me-1"></i>
+                                                Registrado: {{ trabajador.created_at|date:"d/m/Y" }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <nav aria-label="Navegación de trabajadores" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+        {% else %}
+            <!-- Estado vacío -->
+            <div class="empty-state">
+                <i class="bi bi-people"></i>
+                <h3 class="mt-3 mb-2">No hay trabajadores registrados</h3>
+                <p class="text-muted mb-4">
+                    Comienza agregando el primer trabajador de CarriAcces.
+                </p>
+                <a href="{% url 'trabajadores:create' %}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-circle me-2"></i>Agregar Primer Trabajador
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

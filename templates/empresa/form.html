@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - CarriAcces{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-building me-2"></i>{{ title }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <!-- Información Básica -->
+                        <div class="col-lg-6">
+                            <h5 class="text-primary mb-3">
+                                <i class="bi bi-info-circle me-2"></i>Información Básica
+                            </h5>
+                            
+                            <!-- Nombre -->
+                            <div class="mb-3">
+                                <label for="{{ form.nombre.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.nombre.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.nombre }}
+                                {% if form.nombre.help_text %}
+                                    <div class="form-text">{{ form.nombre.help_text }}</div>
+                                {% endif %}
+                                {% if form.nombre.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.nombre.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- RUC -->
+                            <div class="mb-3">
+                                <label for="{{ form.ruc.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.ruc.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.ruc }}
+                                {% if form.ruc.help_text %}
+                                    <div class="form-text">{{ form.ruc.help_text }}</div>
+                                {% endif %}
+                                {% if form.ruc.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.ruc.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Dirección -->
+                            <div class="mb-3">
+                                <label for="{{ form.direccion.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.direccion.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.direccion }}
+                                {% if form.direccion.help_text %}
+                                    <div class="form-text">{{ form.direccion.help_text }}</div>
+                                {% endif %}
+                                {% if form.direccion.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.direccion.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Año de Fundación -->
+                            <div class="mb-3">
+                                <label for="{{ form.anio_fundacion.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.anio_fundacion.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.anio_fundacion }}
+                                {% if form.anio_fundacion.help_text %}
+                                    <div class="form-text">{{ form.anio_fundacion.help_text }}</div>
+                                {% endif %}
+                                {% if form.anio_fundacion.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.anio_fundacion.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Imagen -->
+                            <div class="mb-3">
+                                <label for="{{ form.imagen.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.imagen.label }}
+                                </label>
+                                {{ form.imagen }}
+                                {% if form.imagen.help_text %}
+                                    <div class="form-text">{{ form.imagen.help_text }}</div>
+                                {% endif %}
+                                {% if form.imagen.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.imagen.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                
+                                <!-- Vista previa de imagen actual -->
+                                {% if empresa.imagen %}
+                                    <div class="mt-2">
+                                        <small class="text-muted">Logo actual:</small><br>
+                                        <img src="{{ empresa.imagen.url }}" 
+                                             class="img-thumbnail mt-1" 
+                                             style="max-width: 200px; max-height: 150px;"
+                                             alt="Logo actual">
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Misión y Visión -->
+                        <div class="col-lg-6">
+                            <h5 class="text-primary mb-3">
+                                <i class="bi bi-bullseye me-2"></i>Filosofía Empresarial
+                            </h5>
+                            
+                            <!-- Misión -->
+                            <div class="mb-3">
+                                <label for="{{ form.mision.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.mision.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.mision }}
+                                {% if form.mision.help_text %}
+                                    <div class="form-text">{{ form.mision.help_text }}</div>
+                                {% endif %}
+                                {% if form.mision.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.mision.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Visión -->
+                            <div class="mb-3">
+                                <label for="{{ form.vision.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.vision.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.vision }}
+                                {% if form.vision.help_text %}
+                                    <div class="form-text">{{ form.vision.help_text }}</div>
+                                {% endif %}
+                                {% if form.vision.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.vision.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Errores del formulario -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Información importante -->
+                    <div class="alert alert-info d-flex align-items-center mt-4">
+                        <i class="bi bi-info-circle-fill me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <strong>Información importante:</strong><br>
+                            <small>Solo puede existir una empresa registrada en el sistema. Esta información representa a CarriAcces.</small>
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'empresa:detail' %}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left me-2"></i>Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle me-2"></i>{{ action }} Información
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Image preview functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageInput = document.getElementById('{{ form.imagen.id_for_label }}');
+        if (imageInput) {
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Remove existing preview
+                        const existingPreview = document.getElementById('image-preview');
+                        if (existingPreview) {
+                            existingPreview.remove();
+                        }
+                        
+                        // Create new preview
+                        const preview = document.createElement('div');
+                        preview.id = 'image-preview';
+                        preview.className = 'mt-2';
+                        preview.innerHTML = `
+                            <small class="text-muted">Vista previa:</small><br>
+                            <img src="${e.target.result}" 
+                                 class="img-thumbnail mt-1" 
+                                 style="max-width: 200px; max-height: 150px;"
+                                 alt="Vista previa">
+                        `;
+                        imageInput.parentNode.appendChild(preview);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - CarriAcces{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-person-plus me-2"></i>{{ title }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <!-- Información Personal -->
+                        <div class="col-md-6">
+                            <h5 class="text-primary mb-3">
+                                <i class="bi bi-person me-2"></i>Información Personal
+                            </h5>
+                            
+                            <!-- Nombre -->
+                            <div class="mb-3">
+                                <label for="{{ form.nombre.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.nombre.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.nombre }}
+                                {% if form.nombre.help_text %}
+                                    <div class="form-text">{{ form.nombre.help_text }}</div>
+                                {% endif %}
+                                {% if form.nombre.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.nombre.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Apellido -->
+                            <div class="mb-3">
+                                <label for="{{ form.apellido.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.apellido.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.apellido }}
+                                {% if form.apellido.help_text %}
+                                    <div class="form-text">{{ form.apellido.help_text }}</div>
+                                {% endif %}
+                                {% if form.apellido.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.apellido.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Correo -->
+                            <div class="mb-3">
+                                <label for="{{ form.correo.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.correo.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.correo }}
+                                {% if form.correo.help_text %}
+                                    <div class="form-text">{{ form.correo.help_text }}</div>
+                                {% endif %}
+                                {% if form.correo.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.correo.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Información Laboral -->
+                        <div class="col-md-6">
+                            <h5 class="text-primary mb-3">
+                                <i class="bi bi-briefcase me-2"></i>Información Laboral
+                            </h5>
+                            
+                            <!-- Cédula -->
+                            <div class="mb-3">
+                                <label for="{{ form.cedula.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.cedula.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.cedula }}
+                                {% if form.cedula.help_text %}
+                                    <div class="form-text">{{ form.cedula.help_text }}</div>
+                                {% endif %}
+                                {% if form.cedula.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.cedula.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Código de Empleado -->
+                            <div class="mb-3">
+                                <label for="{{ form.codigo_empleado.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.codigo_empleado.label }} <span class="text-danger">*</span>
+                                </label>
+                                {{ form.codigo_empleado }}
+                                {% if form.codigo_empleado.help_text %}
+                                    <div class="form-text">{{ form.codigo_empleado.help_text }}</div>
+                                {% endif %}
+                                {% if form.codigo_empleado.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.codigo_empleado.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Imagen -->
+                            <div class="mb-3">
+                                <label for="{{ form.imagen.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.imagen.label }}
+                                </label>
+                                {{ form.imagen }}
+                                {% if form.imagen.help_text %}
+                                    <div class="form-text">{{ form.imagen.help_text }}</div>
+                                {% endif %}
+                                {% if form.imagen.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.imagen.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                
+                                <!-- Vista previa de imagen actual -->
+                                {% if trabajador.imagen %}
+                                    <div class="mt-2">
+                                        <small class="text-muted">Imagen actual:</small><br>
+                                        <img src="{{ trabajador.imagen.url }}" 
+                                             class="img-thumbnail mt-1" 
+                                             style="max-width: 150px; max-height: 150px;"
+                                             alt="Imagen actual">
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Errores del formulario -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Botones de acción -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'trabajadores:list' %}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left me-2"></i>Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle me-2"></i>{{ action }} Trabajador
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Image preview functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageInput = document.getElementById('{{ form.imagen.id_for_label }}');
+        if (imageInput) {
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Remove existing preview
+                        const existingPreview = document.getElementById('image-preview');
+                        if (existingPreview) {
+                            existingPreview.remove();
+                        }
+                        
+                        // Create new preview
+                        const preview = document.createElement('div');
+                        preview.id = 'image-preview';
+                        preview.className = 'mt-2';
+                        preview.innerHTML = `
+                            <small class="text-muted">Vista previa:</small><br>
+                            <img src="${e.target.result}" 
+                                 class="img-thumbnail mt-1" 
+                                 style="max-width: 150px; max-height: 150px;"
+                                 alt="Vista previa">
+                        `;
+                        imageInput.parentNode.appendChild(preview);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

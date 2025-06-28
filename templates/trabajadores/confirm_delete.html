@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - CarriAcces{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-exclamation-triangle me-2"></i>{{ title }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <!-- Información del trabajador a eliminar -->
+                <div class="text-center mb-4">
+                    {% if trabajador.imagen %}
+                        <img src="{{ trabajador.imagen.url }}" 
+                             class="rounded-circle mb-3" 
+                             style="width: 120px; height: 120px; object-fit: cover;"
+                             alt="Foto de {{ trabajador.get_nombre_completo }}">
+                    {% else %}
+                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                             style="width: 120px; height: 120px;">
+                            <i class="bi bi-person-circle text-muted" style="font-size: 4rem;"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <h5 class="text-primary mb-1">{{ trabajador.get_nombre_completo }}</h5>
+                    <p class="text-muted mb-0">{{ trabajador.correo }}</p>
+                    <small class="text-muted">{{ trabajador.codigo_empleado }}</small>
+                </div>
+
+                <!-- Advertencia -->
+                <div class="alert alert-warning d-flex align-items-center">
+                    <i class="bi bi-exclamation-triangle-fill me-3" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <strong>¿Está seguro que desea eliminar este trabajador?</strong><br>
+                        <small>Esta acción no se puede deshacer.</small>
+                    </div>
+                </div>
+
+                <!-- Detalles del trabajador -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h6 class="text-primary mb-3">Detalles del Trabajador:</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <strong>Nombre completo:</strong> {{ trabajador.get_nombre_completo }}
+                            </li>
+                            <li class="mb-2">
+                                <strong>Email:</strong> {{ trabajador.correo }}
+                            </li>
+                            <li class="mb-2">
+                                <strong>Cédula:</strong> {{ trabajador.cedula }}
+                            </li>
+                            <li class="mb-2">
+                                <strong>Código de empleado:</strong> {{ trabajador.codigo_empleado }}
+                            </li>
+                            <li class="mb-2">
+                                <strong>Registrado:</strong> {{ trabajador.created_at|date:"d/m/Y H:i" }}
+                            </li>
+                            {% if trabajador.updated_at != trabajador.created_at %}
+                                <li class="mb-2">
+                                    <strong>Última actualización:</strong> {{ trabajador.updated_at|date:"d/m/Y H:i" }}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Formulario de confirmación -->
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'trabajadores:list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-2"></i>Confirmar Eliminación
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
