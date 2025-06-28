@@ -6,13 +6,13 @@
 
 {% block content %}
     <!-- Sección 1: Descripción de la Empresa -->
-    <section class="py-5">
+    <section class="py-5 fade-in">
         <div class="container">
-            <h2 class="text-center mb-5 text-primary">DESCRIPCIÓN DE LA EMPRESA</h2>
+            <h2 class="text-center mb-5 text-gradient-racing">DESCRIPCIÓN DE LA EMPRESA</h2>
             <div class="row align-items-center">
                 <!-- Carrusel de imágenes a la IZQUIERDA -->
-                <div class="col-lg-6 mb-4">
-                    <div id="empresaCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="col-lg-6 mb-4 slide-in-left">
+                    <div id="empresaCarousel" class="carousel slide shadow-premium rounded-premium" data-bs-ride="carousel">
                         <div class="carousel-indicators">
                             <button type="button" data-bs-target="#empresaCarousel" data-bs-slide-to="0" class="active"></button>
                             <button type="button" data-bs-target="#empresaCarousel" data-bs-slide-to="1"></button>
@@ -51,9 +51,9 @@
                 </div>
                 
                 <!-- Texto descriptivo a la DERECHA -->
-                <div class="col-lg-6">
+                <div class="col-lg-6 slide-in-right">
                     <div class="ps-lg-4">
-                        <h3 class="text-primary mb-4">Especialistas en Accesorios Automotrices</h3>
+                        <h3 class="text-racing mb-4 engine-rev">Especialistas en Accesorios Automotrices</h3>
                         <p class="lead mb-4">
                             En CarriAcces nos especializamos en ofrecer la más amplia gama de accesorios 
                             para automóviles, desde sistemas de audio y navegación hasta elementos de 
@@ -62,26 +62,26 @@
                         <div class="row">
                             <div class="col-sm-6 mb-3">
                                 <div class="d-flex align-items-center">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    <span>Productos certificados</span>
+                                    <i class="bi bi-check-circle-fill text-racing me-2"></i>
+                                    <span><strong>Productos certificados</strong></span>
                                 </div>
                             </div>
                             <div class="col-sm-6 mb-3">
                                 <div class="d-flex align-items-center">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    <span>Garantía extendida</span>
+                                    <i class="bi bi-check-circle-fill text-racing me-2"></i>
+                                    <span><strong>Garantía extendida</strong></span>
                                 </div>
                             </div>
                             <div class="col-sm-6 mb-3">
                                 <div class="d-flex align-items-center">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    <span>Instalación profesional</span>
+                                    <i class="bi bi-check-circle-fill text-racing me-2"></i>
+                                    <span><strong>Instalación profesional</strong></span>
                                 </div>
                             </div>
                             <div class="col-sm-6 mb-3">
                                 <div class="d-flex align-items-center">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    <span>Soporte técnico</span>
+                                    <i class="bi bi-check-circle-fill text-racing me-2"></i>
+                                    <span><strong>Soporte técnico</strong></span>
                                 </div>
                             </div>
                         </div>
@@ -92,17 +92,19 @@
         </div>
     </section>
 
-    <!-- Separador -->
-    <hr class="my-5">
+    <!-- Separador Premium -->
+    <div class="my-5 d-flex justify-content-center">
+        <div style="width: 200px; height: 4px; background: linear-gradient(90deg, var(--primary-red) 0%, var(--racing-yellow) 50%, var(--primary-red) 100%); border-radius: 2px;"></div>
+    </div>
 
     <!-- Sección 2: Historia de la Empresa -->
-    <section class="py-5 bg-light">
+    <section class="py-5 bg-metallic fade-in">
         <div class="container">
-            <h2 class="text-center mb-5 text-primary">HISTORIA DE LA EMPRESA</h2>
+            <h2 class="text-center mb-5 text-gradient-racing">HISTORIA DE LA EMPRESA</h2>
             <div class="row align-items-center">
                 <!-- Texto narrativo a la IZQUIERDA -->
-                <div class="col-lg-6 mb-4">
-                    <h3 class="text-primary mb-4">Nuestra Trayectoria</h3>
+                <div class="col-lg-6 mb-4 slide-in-left">
+                    <h3 class="text-racing mb-4">Nuestra Trayectoria</h3>
                     <p class="mb-4">
                         CarriAcces nació con la visión de convertirse en la tienda líder en 
                         accesorios automotrices, ofreciendo productos de la más alta calidad 
@@ -116,29 +118,29 @@
                     <div class="timeline mb-4">
                         <div class="d-flex mb-3">
                             <div class="flex-shrink-0">
-                                <span class="badge bg-primary rounded-pill">2020</span>
+                                <span class="badge rounded-pill" style="background: linear-gradient(135deg, var(--primary-red) 0%, var(--racing-yellow) 100%); color: var(--carbon-black); font-weight: 700;">2020</span>
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <strong>Fundación</strong><br>
-                                <small class="text-muted">Inicio de operaciones con enfoque en calidad</small>
+                                <strong class="text-racing">Fundación</strong><br>
+                                <small class="text-secondary">Inicio de operaciones con enfoque en calidad</small>
                             </div>
                         </div>
                         <div class="d-flex mb-3">
                             <div class="flex-shrink-0">
-                                <span class="badge bg-primary rounded-pill">2022</span>
+                                <span class="badge rounded-pill" style="background: linear-gradient(135deg, var(--primary-red) 0%, var(--racing-yellow) 100%); color: var(--carbon-black); font-weight: 700;">2022</span>
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <strong>Expansión</strong><br>
-                                <small class="text-muted">Ampliación del catálogo y servicios</small>
+                                <strong class="text-racing">Expansión</strong><br>
+                                <small class="text-secondary">Ampliación del catálogo y servicios</small>
                             </div>
                         </div>
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <span class="badge bg-primary rounded-pill">2025</span>
+                                <span class="badge rounded-pill" style="background: linear-gradient(135deg, var(--primary-red) 0%, var(--racing-yellow) 100%); color: var(--carbon-black); font-weight: 700;">2025</span>
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <strong>Digitalización</strong><br>
-                                <small class="text-muted">Plataforma web para mejor atención</small>
+                                <strong class="text-racing">Digitalización</strong><br>
+                                <small class="text-secondary">Plataforma web para mejor atención</small>
                             </div>
                         </div>
                     </div>
@@ -146,8 +148,8 @@
                 </div>
                 
                 <!-- Carrusel de imágenes a la DERECHA -->
-                <div class="col-lg-6">
-                    <div id="historiaCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="col-lg-6 slide-in-right">
+                    <div id="historiaCarousel" class="carousel slide shadow-premium rounded-premium" data-bs-ride="carousel">
                         <div class="carousel-indicators">
                             <button type="button" data-bs-target="#historiaCarousel" data-bs-slide-to="0" class="active"></button>
                             <button type="button" data-bs-target="#historiaCarousel" data-bs-slide-to="1"></button>
