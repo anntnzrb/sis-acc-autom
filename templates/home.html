@@ -2,26 +2,7 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block page_header %}
-    <!-- Custom header for home page -->
-    <div class="bg-primary text-white">
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-car-front-fill me-3"></i>CarriAcces
-                    </h1>
-                    <p class="lead mb-0">
-                        Tu tienda especializada en accesorios para automóviles de la más alta calidad
-                    </p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <i class="bi bi-tools display-1"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+{% block page_header %}{% endblock %}
 
 {% block content %}
     <!-- Sección 1: Descripción de la Empresa -->
@@ -42,34 +23,22 @@
                             <div class="carousel-item active">
                                 <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&h=400&fit=crop" 
                                      class="d-block w-100" alt="Accesorios automotrices de calidad">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Accesorios de Calidad</h5>
-                                    <p>Los mejores productos para tu vehículo</p>
-                                </div>
+
                             </div>
                             <div class="carousel-item">
                                 <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&h=400&fit=crop" 
                                      class="d-block w-100" alt="Servicios especializados">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Servicios Especializados</h5>
-                                    <p>Asesoría experta para cada necesidad</p>
-                                </div>
+
                             </div>
                             <div class="carousel-item">
                                 <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600&h=400&fit=crop" 
                                      class="d-block w-100" alt="Amplio catálogo">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Amplio Catálogo</h5>
-                                    <p>Variedad de productos para todos los vehículos</p>
-                                </div>
+
                             </div>
                             <div class="carousel-item">
                                 <img src="https://images.unsplash.com/photo-1486326658981-ed68abe5868e?w=600&h=400&fit=crop" 
                                      class="d-block w-100" alt="Instalación profesional">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Instalación Profesional</h5>
-                                    <p>Servicio de instalación experto</p>
-                                </div>
+
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#empresaCarousel" data-bs-slide="prev">
@@ -116,9 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{% url 'productos:list' %}" class="btn btn-primary btn-lg mt-3">
-                            <i class="bi bi-collection me-2"></i>Ver Productos
-                        </a>
+
                     </div>
                 </div>
             </div>
@@ -175,9 +142,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{% url 'empresa:detail' %}" class="btn btn-outline-primary">
-                        <i class="bi bi-info-circle me-2"></i>Conoce Más
-                    </a>
+
                 </div>
                 
                 <!-- Carrusel de imágenes a la DERECHA -->
@@ -193,34 +158,22 @@
                             <div class="carousel-item active">
                                 <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=400&fit=crop" 
                                      class="d-block w-100" alt="Evolución de la empresa">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Nuestros Inicios</h5>
-                                    <p>Pequeño local, grandes sueños</p>
-                                </div>
+
                             </div>
                             <div class="carousel-item">
                                 <img src="https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=600&h=400&fit=crop" 
                                      class="d-block w-100" alt="Crecimiento empresarial">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Crecimiento</h5>
-                                    <p>Expandiendo horizontes</p>
-                                </div>
+
                             </div>
                             <div class="carousel-item">
                                 <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop" 
                                      class="d-block w-100" alt="Equipo profesional">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Equipo Profesional</h5>
-                                    <p>Personal especializado y comprometido</p>
-                                </div>
+
                             </div>
                             <div class="carousel-item">
                                 <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop" 
                                      class="d-block w-100" alt="Innovación tecnológica">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Innovación</h5>
-                                    <p>Tecnología al servicio del cliente</p>
-                                </div>
+
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#historiaCarousel" data-bs-slide="prev">
@@ -235,37 +188,7 @@
         </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="py-5 bg-primary text-white">
-        <div class="container text-center">
-            <h3 class="mb-4">¿Listo para mejorar tu vehículo?</h3>
-            <p class="lead mb-4">Explora nuestro catálogo completo de productos y servicios</p>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <a href="{% url 'productos:list' %}" class="btn btn-light btn-lg w-100">
-                                <i class="bi bi-collection d-block mb-2" style="font-size: 1.5rem;"></i>
-                                Productos
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="{% url 'empresa:detail' %}" class="btn btn-outline-light btn-lg w-100">
-                                <i class="bi bi-info-circle d-block mb-2" style="font-size: 1.5rem;"></i>
-                                Nosotros
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="{% url 'trabajadores:list' %}" class="btn btn-outline-light btn-lg w-100">
-                                <i class="bi bi-people d-block mb-2" style="font-size: 1.5rem;"></i>
-                                Nuestro Equipo
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 {% endblock %}
 
 {% block extra_js %}
