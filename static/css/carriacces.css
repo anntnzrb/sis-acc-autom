@@ -57,8 +57,8 @@ Premium Racing-Inspired Design System
     --border-radius-xl: 16px;
     
     /* Premium Typography */
-    --font-primary: 'Inter', 'Segoe UI', system-ui, sans-serif;
-    --font-heading: 'Inter', 'Roboto', sans-serif;
+    --font-primary: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+    --font-heading: 'Plus Jakarta Sans', 'Roboto', sans-serif;
     --font-mono: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
     
     --font-size-xs: 0.75rem;
@@ -75,7 +75,7 @@ Premium Racing-Inspired Design System
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
-    --font-weight-black: 900;
+    --font-weight-extrabold: 800;
     
     /* Professional Spacing */
     --space-1: 0.25rem;
@@ -155,7 +155,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-black);
+    font-weight: var(--font-weight-extrabold);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -243,7 +243,7 @@ h3 {
 .company-title {
     font-family: var(--font-heading);
     font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-black);
+    font-weight: var(--font-weight-extrabold);
     text-transform: uppercase;
     letter-spacing: 2px;
     position: relative;
@@ -551,7 +551,7 @@ h3 {
 /* Pricing display */
 .h4 {
     font-family: var(--font-heading);
-    font-weight: var(--font-weight-black);
+    font-weight: var(--font-weight-extrabold);
     color: var(--primary-red);
     font-size: var(--font-size-2xl);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
