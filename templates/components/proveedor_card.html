@@ -1,66 +1,42 @@
-<!-- Supplier card component - vertical layout for 3-column grid -->
+<!-- Simplified Proveedor card component -->
 <div class="card h-100 shadow-sm">
-    <!-- Supplier Header -->
-    <div class="card-header bg-primary text-white">
-        <h5 class="card-title mb-0 text-center">
-            <i class="bi bi-truck me-2"></i>{{ proveedor.nombre }}
-        </h5>
-    </div>
-    
-    <!-- Supplier Information Body -->
-    <div class="card-body d-flex flex-column">
-        <!-- Description -->
-        <p class="card-text text-muted small mb-3 flex-grow-1">
-            {{ proveedor.descripcion|truncatewords:20 }}
-        </p>
+    <!-- Proveedor Information -->
+    <div class="card-body p-3">
+        <!-- Provider Name -->
+        <h6 class="card-title fw-bold mb-3" style="font-size: 0.95rem;">
+            {{ proveedor.nombre|upper }}
+        </h6>
         
-        <!-- Contact Information -->
-        <div class="contact-info mb-3">
-            <div class="mb-2">
-                <strong class="text-muted">Contacto:</strong>
-            </div>
-            <div class="mb-1">
-                <i class="bi bi-envelope me-2 text-primary"></i>
-                <small>{{ proveedor.correo }}</small>
-            </div>
-            <div class="mb-1">
-                <i class="bi bi-telephone me-2 text-primary"></i>
-                <small>{{ proveedor.telefono }}</small>
-            </div>
-            <div class="mb-1">
-                <i class="bi bi-geo-alt me-2 text-primary"></i>
-                <small>{{ proveedor.pais }}</small>
-            </div>
+        <!-- Email -->
+        <div class="mb-2">
+            <strong>Correo</strong><br>
+            <span class="text-muted small">{{ proveedor.correo }}</span>
         </div>
         
-        <!-- Address -->
-        {% if proveedor.direccion %}
-            <div class="mb-3">
-                <strong class="text-muted small">Dirección:</strong>
-                <p class="small text-muted mb-0">{{ proveedor.direccion|truncatewords:10 }}</p>
-            </div>
-        {% endif %}
-    </div>
-    
-    <!-- Action Buttons Footer -->
-    <div class="card-footer bg-transparent">
-        <div class="d-flex justify-content-between">
-            <a href="{% url 'proveedores:update' proveedor.pk %}" 
-               class="btn btn-sm btn-outline-primary flex-fill me-2">
-                <i class="bi bi-pencil me-1"></i>Editar
-            </a>
-            <a href="{% url 'proveedores:delete' proveedor.pk %}" 
-               class="btn btn-sm btn-outline-danger flex-fill">
-                <i class="bi bi-trash me-1"></i>Eliminar
-            </a>
+        <!-- Phone -->
+        <div class="mb-2">
+            <strong>Teléfono</strong><br>
+            <span class="text-muted small">{{ proveedor.telefono }}</span>
         </div>
         
-        <!-- Registration Date -->
-        <div class="text-center mt-2">
-            <small class="text-muted">
-                <i class="bi bi-calendar3 me-1"></i>
-                Registrado: {{ proveedor.created_at|date:"d/m/Y" }}
-            </small>
+        <!-- Country and Actions -->
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <strong>País</strong><br>
+                <span class="text-muted small">{{ proveedor.pais }}</span>
+            </div>
+            <div>
+                <a href="{% url 'proveedores:update' proveedor.pk %}" 
+                   class="btn btn-link btn-sm p-1" 
+                   title="Editar proveedor">
+                    <i class="bi bi-pencil" style="font-size: 1.1rem;"></i>
+                </a>
+                <a href="{% url 'proveedores:delete' proveedor.pk %}" 
+                   class="btn btn-link btn-sm p-1 text-danger" 
+                   title="Eliminar proveedor">
+                    <i class="bi bi-trash" style="font-size: 1.1rem;"></i>
+                </a>
+            </div>
         </div>
     </div>
 </div>
