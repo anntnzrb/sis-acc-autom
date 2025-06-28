@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import EmailValidator, RegexValidator
+from carriacces.utils import validate_uploaded_image
 
 
 class Trabajador(models.Model):
@@ -90,3 +91,5 @@ class Trabajador(models.Model):
             self.correo = self.correo.strip().lower()
         if self.codigo_empleado:
             self.codigo_empleado = self.codigo_empleado.strip().upper()
+        if self.imagen:
+            validate_uploaded_image(self.imagen)
