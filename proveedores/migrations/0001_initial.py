@@ -5,31 +5,89 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Proveedor',
+            name="Proveedor",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nombre', models.CharField(help_text='Nombre o razón social del proveedor', max_length=200, verbose_name='Nombre del Proveedor')),
-                ('descripcion', models.TextField(help_text='Descripción de los productos/servicios que ofrece', verbose_name='Descripción')),
-                ('telefono', models.CharField(help_text='Número de teléfono de contacto', max_length=15, validators=[django.core.validators.RegexValidator(message='Ingrese un número de teléfono válido', regex='^\\+?[\\d\\s\\-\\(\\)]{7,15}$')], verbose_name='Teléfono')),
-                ('pais', models.CharField(help_text='País donde se encuentra ubicado el proveedor', max_length=100, verbose_name='País')),
-                ('correo', models.EmailField(help_text='Correo electrónico de contacto', max_length=254, validators=[django.core.validators.EmailValidator()], verbose_name='Correo Electrónico')),
-                ('direccion', models.TextField(help_text='Dirección física completa del proveedor', verbose_name='Dirección')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "nombre",
+                    models.CharField(
+                        help_text="Nombre o razón social del proveedor",
+                        max_length=200,
+                        verbose_name="Nombre del Proveedor",
+                    ),
+                ),
+                (
+                    "descripcion",
+                    models.TextField(
+                        help_text="Descripción de los productos/servicios que ofrece",
+                        verbose_name="Descripción",
+                    ),
+                ),
+                (
+                    "telefono",
+                    models.CharField(
+                        help_text="Número de teléfono de contacto",
+                        max_length=15,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                message="Ingrese un número de teléfono válido",
+                                regex="^\\+?[\\d\\s\\-\\(\\)]{7,15}$",
+                            )
+                        ],
+                        verbose_name="Teléfono",
+                    ),
+                ),
+                (
+                    "pais",
+                    models.CharField(
+                        help_text="País donde se encuentra ubicado el proveedor",
+                        max_length=100,
+                        verbose_name="País",
+                    ),
+                ),
+                (
+                    "correo",
+                    models.EmailField(
+                        help_text="Correo electrónico de contacto",
+                        max_length=254,
+                        validators=[django.core.validators.EmailValidator()],
+                        verbose_name="Correo Electrónico",
+                    ),
+                ),
+                (
+                    "direccion",
+                    models.TextField(
+                        help_text="Dirección física completa del proveedor",
+                        verbose_name="Dirección",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
             options={
-                'verbose_name': 'Proveedor',
-                'verbose_name_plural': 'Proveedores',
-                'ordering': ['nombre'],
-                'indexes': [models.Index(fields=['nombre'], name='proveedores_nombre_22fb8e_idx'), models.Index(fields=['pais'], name='proveedores_pais_816ce8_idx')],
+                "verbose_name": "Proveedor",
+                "verbose_name_plural": "Proveedores",
+                "ordering": ["nombre"],
+                "indexes": [
+                    models.Index(
+                        fields=["nombre"], name="proveedores_nombre_22fb8e_idx"
+                    ),
+                    models.Index(fields=["pais"], name="proveedores_pais_816ce8_idx"),
+                ],
             },
         ),
     ]

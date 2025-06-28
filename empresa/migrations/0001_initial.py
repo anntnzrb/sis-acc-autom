@@ -5,31 +5,98 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Empresa',
+            name="Empresa",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nombre', models.CharField(help_text='Nombre oficial de la empresa', max_length=200, verbose_name='Nombre de la Empresa')),
-                ('direccion', models.TextField(help_text='Dirección física completa de la empresa', verbose_name='Dirección')),
-                ('mision', models.TextField(help_text='Misión de la empresa', verbose_name='Misión')),
-                ('vision', models.TextField(help_text='Visión de la empresa', verbose_name='Visión')),
-                ('anio_fundacion', models.PositiveIntegerField(help_text='Año en que fue fundada la empresa', validators=[django.core.validators.MinValueValidator(1900, message='El año de fundación debe ser mayor a 1900'), django.core.validators.MinValueValidator(1900)], verbose_name='Año de Fundación')),
-                ('ruc', models.CharField(help_text='Registro Único de Contribuyente (13 dígitos)', max_length=13, unique=True, validators=[django.core.validators.RegexValidator(message='El RUC debe contener exactamente 13 dígitos', regex='^\\d{13}$')], verbose_name='RUC')),
-                ('imagen', models.ImageField(blank=True, help_text='Logo o imagen representativa de la empresa (opcional)', null=True, upload_to='empresa/', verbose_name='Logo/Imagen')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "nombre",
+                    models.CharField(
+                        help_text="Nombre oficial de la empresa",
+                        max_length=200,
+                        verbose_name="Nombre de la Empresa",
+                    ),
+                ),
+                (
+                    "direccion",
+                    models.TextField(
+                        help_text="Dirección física completa de la empresa",
+                        verbose_name="Dirección",
+                    ),
+                ),
+                (
+                    "mision",
+                    models.TextField(
+                        help_text="Misión de la empresa", verbose_name="Misión"
+                    ),
+                ),
+                (
+                    "vision",
+                    models.TextField(
+                        help_text="Visión de la empresa", verbose_name="Visión"
+                    ),
+                ),
+                (
+                    "anio_fundacion",
+                    models.PositiveIntegerField(
+                        help_text="Año en que fue fundada la empresa",
+                        validators=[
+                            django.core.validators.MinValueValidator(
+                                1900,
+                                message="El año de fundación debe ser mayor a 1900",
+                            ),
+                            django.core.validators.MinValueValidator(1900),
+                        ],
+                        verbose_name="Año de Fundación",
+                    ),
+                ),
+                (
+                    "ruc",
+                    models.CharField(
+                        help_text="Registro Único de Contribuyente (13 dígitos)",
+                        max_length=13,
+                        unique=True,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                message="El RUC debe contener exactamente 13 dígitos",
+                                regex="^\\d{13}$",
+                            )
+                        ],
+                        verbose_name="RUC",
+                    ),
+                ),
+                (
+                    "imagen",
+                    models.ImageField(
+                        blank=True,
+                        help_text="Logo o imagen representativa de la empresa (opcional)",
+                        null=True,
+                        upload_to="empresa/",
+                        verbose_name="Logo/Imagen",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
             options={
-                'verbose_name': 'Empresa',
-                'verbose_name_plural': 'Empresas',
-                'constraints': [models.UniqueConstraint(fields=('ruc',), name='unique_empresa_ruc')],
+                "verbose_name": "Empresa",
+                "verbose_name_plural": "Empresas",
+                "constraints": [
+                    models.UniqueConstraint(fields=("ruc",), name="unique_empresa_ruc")
+                ],
             },
         ),
     ]

@@ -5,31 +5,101 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Trabajador',
+            name="Trabajador",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nombre', models.CharField(help_text='Nombre del trabajador', max_length=100, verbose_name='Nombre')),
-                ('apellido', models.CharField(help_text='Apellido del trabajador', max_length=100, verbose_name='Apellido')),
-                ('correo', models.EmailField(help_text='Correo electrónico único del trabajador', max_length=254, unique=True, validators=[django.core.validators.EmailValidator()], verbose_name='Correo Electrónico')),
-                ('cedula', models.CharField(help_text='Número de cédula de identidad (10 dígitos)', max_length=10, unique=True, validators=[django.core.validators.RegexValidator(message='La cédula debe contener exactamente 10 dígitos', regex='^\\d{10}$')], verbose_name='Cédula')),
-                ('codigo_empleado', models.CharField(help_text='Código único de empleado', max_length=20, unique=True, verbose_name='Código de Empleado')),
-                ('imagen', models.ImageField(blank=True, help_text='Foto del trabajador (opcional)', null=True, upload_to='trabajadores/', verbose_name='Imagen')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "nombre",
+                    models.CharField(
+                        help_text="Nombre del trabajador",
+                        max_length=100,
+                        verbose_name="Nombre",
+                    ),
+                ),
+                (
+                    "apellido",
+                    models.CharField(
+                        help_text="Apellido del trabajador",
+                        max_length=100,
+                        verbose_name="Apellido",
+                    ),
+                ),
+                (
+                    "correo",
+                    models.EmailField(
+                        help_text="Correo electrónico único del trabajador",
+                        max_length=254,
+                        unique=True,
+                        validators=[django.core.validators.EmailValidator()],
+                        verbose_name="Correo Electrónico",
+                    ),
+                ),
+                (
+                    "cedula",
+                    models.CharField(
+                        help_text="Número de cédula de identidad (10 dígitos)",
+                        max_length=10,
+                        unique=True,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                message="La cédula debe contener exactamente 10 dígitos",
+                                regex="^\\d{10}$",
+                            )
+                        ],
+                        verbose_name="Cédula",
+                    ),
+                ),
+                (
+                    "codigo_empleado",
+                    models.CharField(
+                        help_text="Código único de empleado",
+                        max_length=20,
+                        unique=True,
+                        verbose_name="Código de Empleado",
+                    ),
+                ),
+                (
+                    "imagen",
+                    models.ImageField(
+                        blank=True,
+                        help_text="Foto del trabajador (opcional)",
+                        null=True,
+                        upload_to="trabajadores/",
+                        verbose_name="Imagen",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
             options={
-                'verbose_name': 'Trabajador',
-                'verbose_name_plural': 'Trabajadores',
-                'ordering': ['apellido', 'nombre'],
-                'constraints': [models.UniqueConstraint(fields=('correo',), name='unique_trabajador_correo'), models.UniqueConstraint(fields=('cedula',), name='unique_trabajador_cedula'), models.UniqueConstraint(fields=('codigo_empleado',), name='unique_trabajador_codigo')],
+                "verbose_name": "Trabajador",
+                "verbose_name_plural": "Trabajadores",
+                "ordering": ["apellido", "nombre"],
+                "constraints": [
+                    models.UniqueConstraint(
+                        fields=("correo",), name="unique_trabajador_correo"
+                    ),
+                    models.UniqueConstraint(
+                        fields=("cedula",), name="unique_trabajador_cedula"
+                    ),
+                    models.UniqueConstraint(
+                        fields=("codigo_empleado",), name="unique_trabajador_codigo"
+                    ),
+                ],
             },
         ),
     ]

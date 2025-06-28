@@ -1,0 +1,51 @@
+<!-- Reusable carousel component for image galleries -->
+<div id="{{ carousel_id }}" class="carousel slide" data-bs-ride="carousel">
+    {% if images|length > 1 %}
+        <div class="carousel-indicators">
+            {% for image in images %}
+                <button type="button" 
+                        data-bs-target="#{{ carousel_id }}" 
+                        data-bs-slide-to="{{ forloop.counter0 }}" 
+                        {% if forloop.first %}class="active"{% endif %}
+                        aria-label="Slide {{ forloop.counter }}"></button>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <div class="carousel-inner rounded">
+        {% for image in images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ image.url }}" 
+                     class="d-block w-100" 
+                     style="height: 400px; object-fit: cover;"
+                     alt="{{ image.alt|default:'Imagen' }}">
+                {% if image.caption %}
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ image.title }}</h5>
+                        <p>{{ image.caption }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    
+    {% if images|length > 1 %}
+        <button class="carousel-control-prev" type="button" data-bs-target="#{{ carousel_id }}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#{{ carousel_id }}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    {% endif %}
+</div>
+
+<!-- Responsive styling for mobile devices -->
+<style>
+    @media (max-width: 768px) {
+        #{{ carousel_id }} .carousel-inner img {
+            height: 250px;
+        }
+    }
+</style>

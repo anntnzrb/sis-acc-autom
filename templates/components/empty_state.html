@@ -1,0 +1,14 @@
+<!-- Reusable empty state component for zero-data scenarios -->
+<div class="empty-state fade-in text-center py-5">
+    <div class="empty-state-icon mb-4">
+        <i class="bi {{ icon|default:'bi-box-seam' }}" style="font-size: 4rem; color: #6b7280;"></i>
+    </div>
+    <h3 class="empty-state-title text-muted mb-3">{{ title }}</h3>
+    <p class="empty-state-text text-muted mb-4">{{ message }}</p>
+    
+    {% if action_url and action_text %}
+        <a href="{% url action_url %}" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-circle me-2"></i>{{ action_text }}
+        </a>
+    {% endif %}
+</div>

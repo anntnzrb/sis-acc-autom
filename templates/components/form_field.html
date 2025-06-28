@@ -1,0 +1,34 @@
+<!-- Reusable form field component with consistent styling -->
+<div class="mb-3">
+    <label for="{{ field.id_for_label }}" class="form-label">
+        {{ field.label }}
+        {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+    </label>
+    
+    {% if field.field.widget.input_type == 'file' %}
+        {{ field|add_class:"form-control" }}
+        <div class="form-text">{{ field.help_text }}</div>
+        {% if field.value %}
+            <div class="mt-2">
+                <small class="text-muted">Archivo actual: {{ field.value }}</small>
+            </div>
+        {% endif %}
+    {% elif field.field.widget.input_type == 'textarea' %}
+        {{ field|add_class:"form-control" }}
+        <div class="form-text">{{ field.help_text }}</div>
+    {% elif field.field.widget.input_type == 'select' %}
+        {{ field|add_class:"form-select" }}
+        <div class="form-text">{{ field.help_text }}</div>
+    {% else %}
+        {{ field|add_class:"form-control" }}
+        <div class="form-text">{{ field.help_text }}</div>
+    {% endif %}
+    
+    {% if field.errors %}
+        <div class="invalid-feedback d-block">
+            {% for error in field.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
