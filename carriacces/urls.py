@@ -1,22 +1,32 @@
 """
 URL configuration for carriacces project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+CarriAcces - Sistema de gestión para tienda de accesorios automotrices.
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from .views import HomeView
 
 urlpatterns = [
+    # Página principal
+    path('', HomeView.as_view(), name='home'),
+    
+    # Administración
     path('admin/', admin.site.urls),
+    
+    # Apps principales
+    path('nosotros/', include('empresa.urls')),
+    path('trabajadores/', include('trabajadores.urls')),
+    path('productos/', include('productos.urls')),
+    path('proveedores/', include('proveedores.urls')),
 ]
+
+# Configuración para servir archivos media en desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Manejadores de errores personalizados
+handler404 = 'carriacces.views.handler404'
+handler500 = 'carriacces.views.handler500'
