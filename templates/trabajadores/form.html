@@ -5,14 +5,14 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white">
+        <div class="card-carriacces shadow-lg-carriacces fade-in">
+            <div class="card-header">
                 <h4 class="mb-0">
                     <i class="bi bi-person-plus me-2"></i>{{ title }}
                 </h4>
             </div>
             <div class="card-body">
-                <form method="post" enctype="multipart/form-data" novalidate>
+                <form method="post" enctype="multipart/form-data" novalidate class="form-carriacces">
                     {% csrf_token %}
                     
                     <div class="row">
@@ -153,7 +153,7 @@
                                 <a href="{% url 'trabajadores:list' %}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left me-2"></i>Cancelar
                                 </a>
-                                <button type="submit" class="btn btn-primary btn-lg">
+                                <button type="submit" class="btn btn-carriacces-primary btn-lg">
                                     <i class="bi bi-check-circle me-2"></i>{{ action }} Trabajador
                                 </button>
                             </div>
