@@ -9,13 +9,6 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="text-primary mb-0">{{ title }}</h2>
-                <p class="text-muted mb-0">
-                    {% if total_trabajadores %}
-                        {{ total_trabajadores }} trabajador{{ total_trabajadores|pluralize:"es" }} registrado{{ total_trabajadores|pluralize:"s" }}
-                    {% else %}
-                        No hay trabajadores registrados
-                    {% endif %}
-                </p>
             </div>
             <a href="{% url 'trabajadores:create' %}" class="btn btn-primary btn-lg">
                 <i class="bi bi-plus-circle me-2"></i>AGREGAR TRABAJADOR
