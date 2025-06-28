@@ -319,6 +319,7 @@ $(if [[ "$SKIP_RESEARCH" != true ]]; then cat << 'RESEARCH_BLOCK'
 
 0. **Context Ingestion**:
    - Run `git ls-files` to list all files and see progress
+   - Read memories to check progress
 
 1. **Domain Research**:
    - WebFetchTool: Extract key concepts from ${README_PATH}
