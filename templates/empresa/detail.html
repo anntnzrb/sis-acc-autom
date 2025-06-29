@@ -6,106 +6,71 @@
 <div class="row justify-content-center">
     <div class="col-lg-10">
         {% if has_empresa and empresa %}
-            <!-- Información de la empresa existe -->
+            <!-- Información de la empresa existe - Layout según wireframe -->
             <div class="row">
-                <!-- Columna Izquierda: Información básica -->
+                <!-- Columna Izquierda: Información de la empresa -->
                 <div class="col-lg-6 mb-4">
-                    <div class="card h-100 shadow">
-                        <div class="card-body">
-                            <!-- Nombre de empresa y botón editar -->
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <h3 class="text-primary mb-0">{{ empresa.nombre }}</h3>
-                                <a href="{% url 'empresa:update' %}" 
-                                   class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-pencil me-1"></i>EDITAR INFORMACIÓN
-                                </a>
-                            </div>
+                    <!-- Nombre de la empresa -->
+                    <div class="mb-4">
+                        <h2 class="fw-bold text-dark mb-0">{{ empresa.nombre|upper }}</h2>
+                    </div>
 
-                            <!-- RUC -->
-                            <div class="mb-3">
-                                <small class="text-muted">RUC:</small><br>
-                                <span class="fw-bold fs-5">{{ empresa.ruc }}</span>
-                            </div>
+                    <!-- RUC -->
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-dark mb-1">RUC</h5>
+                        <p class="text-muted mb-0">{{ empresa.ruc }}</p>
+                    </div>
 
-                            <!-- Dirección -->
-                            <div class="mb-3">
-                                <small class="text-muted">Dirección:</small><br>
-                                <p class="mb-0">
-                                    <i class="bi bi-geo-alt me-2 text-muted"></i>
-                                    {{ empresa.direccion }}
-                                </p>
-                            </div>
+                    <!-- Dirección -->
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-dark mb-1">DIRECCION</h5>
+                        <p class="text-muted mb-0">{{ empresa.direccion }}</p>
+                    </div>
 
-                            <!-- Imagen de la empresa -->
-                            {% if empresa.imagen %}
-                                <div class="mb-3">
-                                    <small class="text-muted">Logo de la empresa:</small><br>
-                                    <img src="{{ empresa.imagen.url }}" 
-                                         class="img-fluid rounded mt-2" 
-                                         style="max-width: 300px; max-height: 200px;"
-                                         alt="Logo de {{ empresa.nombre }}">
+                    <!-- Imagen de la empresa -->
+                    <div class="mb-4 text-center">
+                        {% if empresa.imagen %}
+                            <img src="{{ empresa.imagen.url }}" 
+                                 class="rounded-circle border" 
+                                 style="width: 200px; height: 200px; object-fit: cover;"
+                                 alt="Logo de {{ empresa.nombre }}">
+                        {% else %}
+                            <div class="rounded-circle border d-flex align-items-center justify-content-center text-muted" 
+                                 style="width: 200px; height: 200px; margin: 0 auto; background-color: #f8f9fa;">
+                                <div class="text-center">
+                                    <strong>IMAGEN<br>EMPRESA</strong>
                                 </div>
-                            {% endif %}
-
-                            <!-- Año de fundación -->
-                            <div class="mb-0">
-                                <small class="text-muted">Año de fundación:</small><br>
-                                <span class="badge bg-primary fs-6">{{ empresa.anio_fundacion }}</span>
-                                <small class="text-muted ms-2">
-                                    ({{ "now"|date:"Y"|add:0|add:empresa.anio_fundacion|add:"-"|cut:"-" }} años de experiencia)
-                                </small>
                             </div>
-                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Año de fundación -->
+                    <div class="text-center">
+                        <h5 class="fw-bold text-dark mb-1">AÑO DE FUNDACION</h5>
+                        <p class="text-muted mb-0 fs-4">{{ empresa.anio_fundacion }}</p>
                     </div>
                 </div>
 
-                <!-- Columna Derecha: Misión y Visión -->
+                <!-- Columna Derecha: Misión, Visión y botón editar -->
                 <div class="col-lg-6 mb-4">
-                    <div class="h-100">
-                        <!-- Misión -->
-                        <div class="card mb-3 shadow">
-                            <div class="card-body">
-                                <h5 class="card-title text-primary">
-                                    <i class="bi bi-bullseye me-2"></i>Nuestra Misión
-                                </h5>
-                                <p class="card-text">{{ empresa.mision }}</p>
-                            </div>
-                        </div>
-
-                        <!-- Visión -->
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <h5 class="card-title text-primary">
-                                    <i class="bi bi-eye me-2"></i>Nuestra Visión
-                                </h5>
-                                <p class="card-text">{{ empresa.vision }}</p>
-                            </div>
-                        </div>
+                    <!-- Botón editar en la esquina superior derecha -->
+                    <div class="text-end mb-4">
+                        <a href="{% url 'empresa:update' %}" 
+                           class="btn btn-outline-primary">
+                            EDITAR INFORMACION
+                        </a>
                     </div>
-                </div>
-            </div>
 
-            <!-- Información adicional -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h5 class="text-primary mb-3">
-                                <i class="bi bi-info-circle me-2"></i>Información del Sistema
-                            </h5>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <small class="text-muted">Información registrada:</small><br>
-                                    <span>{{ empresa.created_at|date:"d/m/Y H:i" }}</span>
-                                </div>
-                                {% if empresa.updated_at != empresa.created_at %}
-                                    <div class="col-md-6">
-                                        <small class="text-muted">Última actualización:</small><br>
-                                        <span>{{ empresa.updated_at|date:"d/m/Y H:i" }}</span>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
+                    <!-- Misión -->
+                    <div class="mb-5">
+                        <h3 class="fw-bold text-dark mb-3">MISION</h3>
+                        <p class="text-muted">{{ empresa.mision }}</p>
+                    </div>
+
+                    <!-- Visión -->
+                    <div class="mb-4">
+                        <h3 class="fw-bold text-dark mb-3">VISION</h3>
+                        <p class="text-muted">{{ empresa.vision }}</p>
                     </div>
                 </div>
             </div>
