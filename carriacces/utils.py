@@ -25,9 +25,15 @@ def validate_image_file(image_file):
     if not image_file:
         return True
 
-    # Check file size
+    # Check file size - handle missing files gracefully
     max_size = getattr(settings, "FILE_UPLOAD_MAX_MEMORY_SIZE", 5 * 1024 * 1024)
-    if image_file.size > max_size:
+    try:
+        file_size = image_file.size
+    except (FileNotFoundError, OSError):
+        # File doesn't exist on disk (existing reference), skip validation
+        return True
+    
+    if file_size > max_size:
         raise ValidationError(
             f"El archivo es demasiado grande. Tamaño máximo permitido: {max_size // (1024 * 1024)}MB"
         )
